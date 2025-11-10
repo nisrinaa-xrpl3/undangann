@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Pernikahan - Barik & Yani</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Tangerine:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ============================================== */
+        /* CSS (STYLE) CODE START */
+        /* ============================================== */
+
+        /* PALET WARNA ALA PASTEL PINK & PUTIH */
+        :root {
+            --color-pink-soft: #f4c2c2;   /* Soft Pink */
+            --color-pink-aksen: #e6a0a0;  /* Pink lebih gelap untuk aksen */
+            --color-putih: #ffffff;      /* Putih */
+            --color-abu-gelap: #4a4a4a;   /* Abu-abu gelap untuk teks utama */
+            --color-abu-muda: #777777;    /* Abu-abu muda */
+        }
+
+        body {
+            font-family: 'Playfair Display', serif;
+            margin: 0;
+            padding: 0;
+            /* BACKGROUND DENGAN GRADASI PASTEL PINK */
+            background: linear-gradient(to bottom, 
+                        rgba(255, 230, 230, 0.7) 0%, /* Light Pink 70% opacity */
+                        rgba(255, 210, 210, 0.8) 50%, /* Medium Pink 80% opacity */
+                        rgba(255, 190, 190, 0.9) 100% /* Slightly Darker Pink 90% opacity */
+                        ), 
+                        url('Wedding BG 01.jpg') no-repeat center center fixed; /* Menggunakan foto sebagai base */
+            background-size: cover;
+            color: var(--color-abu-gelap); /* Warna teks default body menjadi abu-abu gelap */
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        .undangan-section {
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+            transition: opacity 1s ease-out; 
+            position: relative;
+        }
+
+        /* Hapus background dari cover-jawa dan detail-jawa karena sudah di body */
+        .cover-jawa { background: none; }
+        .detail-jawa { background: none; }
+        
+        /* Teks di cover */
+        .cover-jawa .sugeng-rawuh, 
+        .cover-jawa .nama-mempelai-wanita, 
+        .cover-jawa .nama-mempelai-pria, 
+        .cover-jawa .dan-text, 
+        .cover-jawa .tamu-undangan {
+            color: var(--color-abu-gelap); /* Menggunakan abu-abu gelap */
+            text-shadow: none; 
+        }
+        .cover-jawa .nama-mempelai-wanita, 
+        .cover-jawa .nama-mempelai-pria {
+            color: var(--color-pink-aksen); /* Nama mempelai jadi pink aksen */
+        }
+        .cover-jawa .dan-text { color: var(--color-abu-gelap); } 
+
+
+        .content-wrapper {
+            /* Background content-wrapper diubah menjadi putih semi-transparan */
+            background-color: rgba(255, 255, 255, 0.95); /* Hampir putih solid */
+            color: var(--color-abu-gelap); 
+            padding: 40px 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
+            max-width: 600px;
+            width: 90%;
+            z-index: 2;
+            position: relative;
+        }
+        
+        /* --- Halaman Pembuka (Cover) --- */
+        #halaman-utama { 
+            display: none; 
+            opacity: 0;
+        } 
+        
+        .arab-text { font-size: 1.5em; margin-bottom: 10px; color: var(--color-abu-gelap); } 
+        .sugeng-rawuh { 
+            font-family: 'Tangerine', cursive; 
+            font-size: 2.5em; 
+            color: var(--color-pink-aksen); /* Warna sugeng-rawuh jadi pink aksen */
+            margin-bottom: 5px; 
+        }
+        .nama-mempelai-wanita, .nama-mempelai-pria {
+            font-family: 'Tangerine', cursive;
+            font-size: 4em;
+            color: var(--color-pink-aksen); /* Nama mempelai jadi pink aksen */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05); /* Shadow lebih lembut */
+            margin: 0;
+            line-height: 1;
+        }
+        .dan-text { font-size: 2em; margin: 5px 0; color: var(--color-abu-gelap); } 
+
+        .btn-buka-undangan {
+            background-color: var(--color-pink-aksen); /* Tombol buka undangan jadi pink aksen */
+            color: white; 
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            margin-top: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            z-index: 3;
+            position: relative;
+        }
+
+        .btn-buka-undangan:hover { background-color: #d18a8a; color: white; } 
+
+        /* --- Halaman Utama (Detail) --- */
+        .section-doa, .section-ortu, .section-acara, .section-lokasi, .section-penutup, .section-galeri { margin-bottom: 30px; }
+        .quote-jawa { color: var(--color-abu-gelap); } 
+        .ayat-quran { font-style: italic; font-size: 0.9em; color: var(--color-pink-aksen); } /* Ayat quran jadi pink aksen */
+        .teks-ibadah { color: var(--color-pink-aksen); font-weight: bold; margin-top: 15px; } /* Teks ibadah jadi pink aksen */
+        .garis-wayang {
+            border: 0;
+            height: 1px;
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)); /* Garis gelap tipis */
+            margin: 40px 0;
+        }
+
+        /* Countdown Timer Styling */
+        .countdown-timer { display: flex; justify-content: space-around; gap: 10px; margin-top: 20px; color: var(--color-abu-gelap); } 
+        .time-box { 
+            background-color: rgba(255, 190, 190, 0.2); /* Pink transparan tipis */
+            color: var(--color-abu-gelap); padding: 10px; border-radius: 8px; min-width: 65px; 
+            border: 1px solid rgba(255, 190, 190, 0.4); 
+        }
+        .time-box span { display: block; font-size: 2em; font-weight: bold; }
+
+        .btn-lokasi { 
+            display: inline-block; background-color: var(--color-pink-aksen); /* Tombol lokasi jadi pink aksen */
+            color: white; 
+            padding: 10px 20px; border-radius: 5px; text-decoration: none; margin-top: 15px; transition: background-color 0.3s; 
+        }
+        .btn-lokasi:hover { background-color: #d18a8a; color: white; }
+        .petunjuk { color: var(--color-abu-gelap); margin-bottom: 5px; } 
+        small { color: var(--color-abu-muda); } /* Koordinat jadi abu-abu muda */
+
+        /* Galeri Foto */
+        .gallery-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 20px; }
+        .gallery-item img { 
+            width: 100%; height: 150px; object-fit: cover; border-radius: 8px; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+            transition: transform 0.3s ease; 
+            border: 2px solid var(--color-pink-aksen); /* Border pink aksen untuk foto galeri */
+        }
+        .gallery-item img:hover { transform: scale(1.05); }
+
+        /* Teks Penutup */
+        .section-penutup p, .section-penutup small { color: var(--color-abu-gelap); } 
+        .section-penutup h2 { color: var(--color-pink-aksen); } /* Nama di penutup juga pink aksen */
+        .penghormatan { color: var(--color-pink-aksen); } 
+
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .nama-mempelai-wanita, .nama-mempelai-pria { font-size: 3em; }
+            .sugeng-rawuh { font-size: 2em; }
+            .countdown-timer { flex-wrap: wrap; justify-content: center; }
+            .time-box { min-width: unset; width: 45%; margin: 5px 0; }
+            .gallery-container { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
+        }
+        /* ============================================== */
+        /* CSS (STYLE) CODE END */
+        /* ============================================== */
+    </style>
+</head>
+<body>
+
+    <section id="halaman-pembuka" class="undangan-section cover-jawa">
+        
+        <div class="content-wrapper">
+            <p class="arab-text">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</p>
+            <p class="sugeng-rawuh">Maha suci Allah SWT Yang telah menciptakan makhluk-Nya berpasang-pasangan. Ya Allah, perkenankan kami menikah:</p>
+
+            <h1 class="nama-mempelai-pria">Barik</h1>
+            <h2 class="dan-text">&</h2>
+            <h1 class="nama-mempelai-wanita">Yani</h1>
+            
+            <button id="buka-undangan-btn" class="btn-buka-undangan">
+                Buka Undangan
+            </button>
+            <p class="tamu-undangan">Kepada Yth. Bapak/Ibu/Saudara/i</p>
+        </div>
+    </section>
+
+    <section id="halaman-utama" class="undangan-section detail-jawa">
+        <div class="content-wrapper">
+            
+            <div class="section-ortu">
+                <h3>Tri Handayani<br><small>Putri dari:</small></h3>
+                <p>Bapak Pajiimin & Ibu Tumanah<br><small>Karang Anyar - Blerong Demak</small></p>
+                <br>
+                <h3>Insanul Barik Ashar<br><small>Putra dari:</small></h3>
+                <p>Bapak Amat Ashar & Ibu Sulistiowati<br><small>Gunung Pati - Semarang</small></p>
+            </div>
+            
+            <hr class="garis-wayang">
+            
+            <div class="section-doa">
+                <p class="quote-jawa">"Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya di antaramu rasa kasih dan sayang. Sesungguhnya pada yang demikian itu benar-benar terdapat tanda-tanda bagi kaum yang berpikir.”</p>
+                <p class="ayat-quran">(QS. Ar-Rum: 21)</p>
+                <p class="teks-ibadah">Kami memohon Ridho Allah SWT untuk menyempurnakan ibadah kami dalam ikatan suci pernikahan.</p>
+            </div>
+            
+            <hr class="garis-wayang">
+
+            <div class="section-countdown">
+                <h2>Menghitung Hari Bahagia</h2>
+                <div id="countdown" class="countdown-timer">
+                    <div class="time-box"><span id="days">00</span> Hari</div>
+                    <div class="time-box"><span id="hours">00</span> Jam</div>
+                    <div class="time-box"><span id="minutes">00</span> Menit</div>
+                    <div class="time-box"><span id="seconds">00</span> Detik</div>
+                </div>
+            </div>
+
+            <div class="section-acara">
+                <div class="box-acara akad">
+                    <h3>Pahargyan Akad Nikah</h3>
+                    <p class="tanggal">Kamis, 04 Desember 2025</p>
+                    <p class="waktu">Pukul: 09:00 WIB</p>
+                    <p class="lokasi">JL. Blerong Guntur, Demak</p>
+                </div>
+                
+                <hr class="garis-wayang">
+
+                <div class="box-acara resepsi">
+                    <h3>Resepsi</h3>
+                    <p class="tanggal">Minggu, 14 Desember 2025</p>
+                    <p class="waktu">Pukul: 12:30 WIB s/d Selesai</p>
+                    <p class="lokasi">JL. Dewi sartika barat 4a, RT 2 / RW 3 Sukorejo Gunung pati Semarang</p>
+                </div>
+
+                <hr class="garis-wayang">
+
+                <div class="box-acara resepsi">
+                    <h3>Tasyakuran</h3>
+                    <p class="tanggal">Sabtu, 20 Desember 2025</p>
+                    <p class="waktu">Pukul: 12:30 WIB s/d Selesai</p>
+                    <p class="lokasi">JL. Dewi sartika barat 4a, RT 2 / RW 3 Sukorejo Gunung pati Semarang</p>
+                </div>
+            </div>
+
+            <hr class="garis-wayang">
+            
+            <div class="section-lokasi">
+                <a href="http://googleusercontent.com/maps.google.com/3" target="_blank" class="btn-lokasi">
+                    Lihat Peta Lokasi (Google Maps)
+                </a>
+                <p class="petunjuk">Mohon gunakan Google Maps untuk panduan terbaik.</p>
+                <small>Koordinat Lokasi: -7.018555, 110.385016</small>
+            </div>
+
+            <hr class="garis-wayang">
+
+            <div class="section-galeri">
+                <h2>Galeri Kenangan Kami</h2>
+                <div class="gallery-container">
+                    <div class="gallery-item"><img src="by1.jpg" alt="Foto Mempelai 1"></div>
+                    <div class="gallery-item"><img src="by2.jpg" alt="Foto Mempelai 2"></div>
+                    <div class="gallery-item"><img src="by3.jpg" alt="Foto Mempelai 3"></div>
+                </div>
+            </div>
+            
+            <hr class="garis-wayang">
+
+            <div class="section-penutup">
+                <p>Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan do'a restu bagi kami.</p>
+                <p class="penghormatan">Wassalamu'alaikum Wr. Wb. Yang berbahagia</p>
+                <h2 class="nama-mempelai-wanita" style="font-size: 2.5em; margin-top: 10px;">Barik & Yani</h2>
+            </div>
+            <p style="font-size: 0.8em; margin-top: 15px;">PERC. WAKOH<br>KR.ANYAR - HP.0857 0264 7870</p>
+
+        </div>
+    </section>
+
+    <script>
+        // --- FUNGSI BUKA UNDANGAN (Sederhana: Fade Out Cover) ---
+        document.getElementById('buka-undangan-btn').addEventListener('click', function() {
+            const pembuka = document.getElementById('halaman-pembuka');
+            const utama = document.getElementById('halaman-utama');
+
+            // 1. Fade Out Halaman Pembuka
+            pembuka.style.opacity = '0';
+            
+            // 2. Setelah transisi fade out (1 detik), ubah display dan fade in Halaman Utama
+            setTimeout(() => {
+                pembuka.style.display = 'none';
+                utama.style.display = 'flex'; // Tampilkan Halaman Utama
+                
+                // 3. Fade In Halaman Utama
+                setTimeout(() => {
+                    utama.style.opacity = '1';
+                }, 50); 
+            }, 1000); // 1000ms = 1 detik (sesuai transisi opacity)
+        });
+
+
+        // --- FUNGSI HITUNG MUNDUR (COUNTDOWN) ---
+        // TARGET: Resepsi 1, 14 Desember 2025, Pukul 12:30:00 (Tanggal tercepat untuk Countdown)
+        const targetDate = new Date("2025-12-14 12:30:00").getTime(); 
+
+        const countdownFunction = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            // Perhitungan waktu
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Tampilkan di elemen HTML, gunakan padStart untuk format 00
+            document.getElementById("days").innerHTML = String(days).padStart(2, '0');
+            document.getElementById("hours").innerHTML = String(hours).padStart(2, '0');
+            document.getElementById("minutes").innerHTML = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").innerHTML = String(seconds).padStart(2, '0');
+
+            // Jika hitungan selesai
+            if (distance < 0) {
+                clearInterval(countdownFunction);
+                document.getElementById("countdown").innerHTML = "Alhamdulillah, Acara Pertama Sudah Selesai!";
+            }
+        }, 1000);
+    </script>
+    </body>
+</html>
